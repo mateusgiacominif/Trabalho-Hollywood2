@@ -164,8 +164,12 @@ void divisao(FILE *fp, int offset, int indice_filho, TARVBM *no_pai, int t){
 		for(int i=no_pai->nchaves-1;i>=indice_filho;i--){
 			strcpy(no_pai->chave[i+1],no_pai->chave[i]);
 			no_pai->filho[i+2] = no_pai->filho[i+1];
+			no_pai->offset_chave[i+1] = no_pai->offset_chave[i];
+			no_pai->id_folha[i+1] = no_pai->id_folha[i];
 		}
 		strcpy(no_pai->chave[indice_filho],valor_mediana);
+		no_pai->offset_chave[indice_filho] = f->offset_chave[t-1];
+		no_pai->id_folha[indice_filho] = f->id_folha[t-1];
 		no_pai->filho[indice_filho+1] = final_arq;
 		no_pai->nchaves++;
 		
@@ -195,8 +199,12 @@ void divisao(FILE *fp, int offset, int indice_filho, TARVBM *no_pai, int t){
 		for(int i=no_pai->nchaves-1;i>=indice_filho;i--){
 			strcpy(no_pai->chave[i+1],no_pai->chave[i]);
 			no_pai->filho[i+2] = no_pai->filho[i+1];
+			no_pai->offset_chave[i+1] = no_pai->offset_chave[i];
+			no_pai->id_folha[i+1] = no_pai->id_folha[i];
 		}
 		strcpy(no_pai->chave[indice_filho],valor_mediana);
+		no_pai->offset_chave[indice_filho] = f->offset_chave[t-1];
+		no_pai->id_folha[indice_filho] = f->id_folha[t-1];
 		no_pai->filho[indice_filho+1] = final_arq;
 		no_pai->nchaves++;
 		
@@ -418,9 +426,8 @@ void imp(FILE *fp, int offset, int andar, int t) {
 	for (int j = 0; j < ((2 * t) - 1); j++){
 		free(no->chave[j]);
 	}
-   	free(no->chave);
-	free(no->filho);
-	free(no);
+   	
+	libera_no(no, t);
 }
 
 void TARVBM_imprime(FILE *fp, int offset, int t){
