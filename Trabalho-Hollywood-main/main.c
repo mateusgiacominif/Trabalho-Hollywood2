@@ -8,9 +8,9 @@ int main(void){
 	if(!arq_nodes) exit(1);
 	FILE *arq_relationships = fopen("data/Relationships.txt","r");
 	if(!arq_relationships) exit(1);
+	TARVBM_cria("bin/indices", t);
 	FILE *arq_indices = fopen("bin/indices","r+b");
 	if(!arq_indices){
-		TARVBM_cria("bin/indices", t);
 		arq_indices = fopen("bin/indices","r+b");
 		if(!arq_indices) exit(1);
 	}
@@ -46,6 +46,10 @@ int main(void){
 		}
 		
 		offset_arquivo = ftell(arq_nodes);
+
+		printf("Estado da Arvore apos inserir: %s\n", nome);
+		TARVBM_imprime(arq_indices, offset, t);
+		printf("\n");
 	}
 	
 	fseek(arq_indices, sizeof(int), SEEK_SET);
